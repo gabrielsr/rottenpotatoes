@@ -1,17 +1,13 @@
 # Welcome to MkDocs
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+This project is a version of myrottenpotatoes by Armando Fox (@armandofox).
+Myrottenpotatoes developed as a companinon to the book Engineering Software as a Service, in ruby on rails. 
 
-## Commands
+This version is developed in Python to be used in the Software Engineering course at University of Brasilia.
+We followed the conventions defined in the book Flask Web Development (FWD)
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
 
-## Project layout
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+
+# Steps to create this repo
+
