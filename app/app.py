@@ -14,3 +14,11 @@ def create_app():
     # app.register_blueprint(frontend)
 
     return app
+
+
+app = create_app()
+
+
+@app.get("/")
+def index():
+    return "Hello World"
