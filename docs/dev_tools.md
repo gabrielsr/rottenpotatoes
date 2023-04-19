@@ -1,8 +1,3 @@
-
-
-Dependencies
-
-
 # Poety
 
 Poetry is a a tool for mananging dependencies.
