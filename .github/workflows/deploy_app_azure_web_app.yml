@@ -24,6 +24,7 @@ jobs:
 
       - name: Poetry install
         run: |
+          pip install poetry
           poetry install
           poetry shell
           pytest .
