@@ -1,5 +1,5 @@
 import pytest
-from app.app import create_app
+from app.webapp import create_app
 
 
 def test_instantiate_app():
