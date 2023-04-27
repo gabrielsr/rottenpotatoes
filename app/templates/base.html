@@ -1,5 +1,6 @@
 {% from 'bootstrap5/utils.html' import render_messages %}
 {% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/nav.html' import render_nav_item, render_breadcrumb_item %}
 
 <!doctype html>
 <html lang="en">
@@ -20,7 +21,10 @@
 </head>
 
 <body>
-    <nav>...</nav>
+    <nav>
+        {{ render_nav_item('main.index', 'Home') }}
+        {{ render_nav_item('auth.login', 'Login') }}
+    </nav>
     {{ render_messages() }}
     <main>
         <!-- Your page content -->
