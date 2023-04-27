@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, render_template
+from flask_bootstrap import Bootstrap5
 
 
 def create_app():
@@ -22,7 +23,7 @@ def create_app():
     #     # production
     #     print("Loading config.production.")
     #     app.config.from_object('azureproject.production')
-
+    bootstrap = Bootstrap5(app)
     return app
 
 
@@ -31,4 +32,4 @@ app = create_app()
 
 @app.get("/")
 def index():
-    return "Hello World"
+    return render_template("index.html")
