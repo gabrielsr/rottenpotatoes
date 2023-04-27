@@ -10,6 +10,9 @@ from flask import (
     url_for,
 )
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 bp = Blueprint("auth", __name__)
 # from flaskr.db import get_db
@@ -38,8 +41,19 @@ def login_required(view):
     return wrapped_view
 
 
+class RegisterForm(FlaskForm):
+    name = StringField("name", validators=[DataRequired()])
+    password = StringField("password", validators=[DataRequired()])
+    submit_button = SubmitField("Submit This Form")
+
+
 @bp.route("/register", methods=("GET", "POST"))
 def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        return redirect(url_for("auth.login"))
+    else:
+        return render_template("auth/register.html", form=form)
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -69,8 +83,19 @@ def register():
     return render_template("auth/register.html")
 
 
+class LoginForm(FlaskForm):
+    name = StringField("name", validators=[DataRequired()])
+    password = StringField("password", validators=[DataRequired()])
+    submit_button = SubmitField("Submit This Form")
+
+
 @bp.route("/login", methods=("GET", "POST"))
 def login():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        return redirect(url_for("main.index"))
+    else:
+        return render_template("auth/login.html", form=form)
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]

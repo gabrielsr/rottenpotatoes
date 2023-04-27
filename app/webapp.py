@@ -49,6 +49,6 @@ def page_not_found(e):
     return render_template("error/404.html", error=e), 404
 
 
-@app.get("/")
-def index():
-    return render_template("index.html")
+# @app.get("/")
+# def index():
+#     return render_template("index.html")
