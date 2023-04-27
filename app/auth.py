@@ -15,7 +15,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 bp = Blueprint("auth", __name__)
-# from flaskr.db import get_db
+from .models import db
 
 
 @bp.before_app_request
@@ -24,10 +24,8 @@ def load_logged_in_user():
 
     if user_id is None:
         g.user = None
-    # else:
-    #     g.user = get_db().execute(
-    #         'SELECT * FROM user WHERE id = ?', (user_id,)
-    #     ).fetchone()
+    else:
+        g.user = db.execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
 
 
 def login_required(view):
@@ -53,6 +51,8 @@ def register():
     if form.validate_on_submit():
         return redirect(url_for("auth.login"))
     else:
+        print(form.name.username)
+
         return render_template("auth/register.html", form=form)
     if request.method == "POST":
         username = request.form["username"]
@@ -93,13 +93,10 @@ class LoginForm(FlaskForm):
 def login():
     form = RegisterForm()
     if form.validate_on_submit():
-        return redirect(url_for("main.index"))
-    else:
-        return render_template("auth/login.html", form=form)
-    if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         error = None
+
         # db = get_db()
         # user = db.execute(
         #     "SELECT * FROM user WHERE username = ?", (username,)
@@ -116,8 +113,9 @@ def login():
             return redirect(url_for("index"))
 
         flash(error, "danger")
-
-    return render_template("auth/login.html")
+        return redirect(url_for("main.index"))
+    else:
+        return render_template("auth/login.html", form=form)
 
 
 @bp.route("/logout")

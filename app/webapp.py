@@ -1,6 +1,10 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 def create_app():
     app = Flask(__name__)
@@ -8,6 +12,7 @@ def create_app():
         SECRET_KEY="dev",
     )
     app.config.from_prefixed_env()
+
     # app.config.from_pyfile(config_filename)
 
     # from yourapplication.model import db
@@ -33,6 +38,21 @@ def create_app():
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
+
+    from .models import db
+
+    # configure the SQLite database, relative to the app instance folder
+    app.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ] = f"sqlite:///{os.path.join(basedir, 'data.sqlite')}"
+    # initialize the app with the extension
+
+    # Initialize the database
+    db.init_app(app)
+    from .models.user import User
+
+    with app.app_context():
+        db.create_all()
 
     return app
 

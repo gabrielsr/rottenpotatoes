@@ -10,6 +10,7 @@ python = "^3.10"
 flask = "^2.2.3"
 bootstrap-flask = "^2.2.0"
 flask-wtf = "^1.1.1"
+flask-sqlalchemy = "^3.0.3"
 
 
 [tool.poetry.group.test]  # This part can be left out
