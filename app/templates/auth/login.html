@@ -7,4 +7,7 @@
 
 {% block content %}
 {{ render_form(form) }}
+<br>
+<p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+
 {% endblock %}
