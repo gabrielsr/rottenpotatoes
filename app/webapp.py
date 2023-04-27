@@ -29,8 +29,10 @@ def create_app():
     #     app.config.from_object('azureproject.production')
     bootstrap = Bootstrap5(app)
     from .auth import bp as auth_bp
+    from .controllers.main import bp as main_bp
 
     app.register_blueprint(auth_bp)
+    app.register_blueprint(main_bp)
 
     return app
 
