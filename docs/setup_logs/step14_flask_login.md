@@ -20,3 +20,9 @@ Creating module auth
  Forms  - Forms used in auth
  Loaders - Put the logged in user in the request
  
+# Create Migration
+
+ `python manage.py` 
+
+
+
