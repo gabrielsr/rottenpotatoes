@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
+from ..webapp import db
+from .user import User
 
-# create the extension
-db = SQLAlchemy()
+__all__ = [User]

@@ -1,14 +1,14 @@
 from . import db
+from flask_login import UserMixin
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
+    __tablename__ = "user"
+
     id = db.Column(db.Integer, primary_key=True)
-    firstname = db.Column(db.String(100), nullable=False)
-    lastname = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(80), unique=True, nullable=False)
-    age = db.Column(db.Integer)
-    # created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    bio = db.Column(db.Text)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    pwd = db.Column(db.String(300), nullable=False, unique=True)
 
     def __repr__(self):
-        return f"<Student {self.firstname}>"
+        return "<User %r>" % self.username

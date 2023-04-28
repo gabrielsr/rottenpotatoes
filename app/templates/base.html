@@ -33,9 +33,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     {{ render_nav_item('main.index', 'Home') }}
+                    {% if current_user.is_authenticated %}
+                    {{ render_nav_item('auth.profile', current_user.username ) }}
+                    {{ render_nav_item('auth.logout', 'Logout') }}
+                    {% else %}
                     {{ render_nav_item('auth.login', 'Login') }}
+                    {% endif %}
                 </ul>
             </div>
+        </div>
     </nav>
     <main class="container">
         {{ render_messages(container=False, dismissible=True, dismiss_animate=True) }}

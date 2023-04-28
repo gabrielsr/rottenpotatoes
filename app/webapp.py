@@ -1,9 +1,23 @@
-from flask import Flask, render_template
-from flask_bootstrap import Bootstrap5
-
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+from flask import Flask, render_template
+from flask_bootstrap import Bootstrap5
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
+from flask_migrate import Migrate
+
+# init extensions
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "login"
+login_manager.login_message_category = "info"
+db = SQLAlchemy()
+migrate = Migrate()
+bcrypt = Bcrypt()
+bootstrap = Bootstrap5()
 
 
 def create_app():
@@ -14,9 +28,6 @@ def create_app():
     app.config.from_prefixed_env()
 
     # app.config.from_pyfile(config_filename)
-
-    # from yourapplication.model import db
-    # db.init_app(app)
 
     # from yourapplication.views.admin import admin
     # from yourapplication.views.frontend import frontend
@@ -32,27 +43,38 @@ def create_app():
     #     # production
     #     print("Loading config.production.")
     #     app.config.from_object('azureproject.production')
-    bootstrap = Bootstrap5(app)
-    from .auth import bp as auth_bp
-    from .controllers.main import bp as main_bp
-
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(main_bp)
-
-    from .models import db
 
     # configure the SQLite database, relative to the app instance folder
     app.config[
         "SQLALCHEMY_DATABASE_URI"
     ] = f"sqlite:///{os.path.join(basedir, 'data.sqlite')}"
+    app.secret_key = "secret-key"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+
+    # init extensions
+    login_manager.init_app(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    bootstrap.init_app(app)
+
+    # register blueprints
+    from .auth import bp as auth_bp
+
+    app.register_blueprint(auth_bp)
+
+    from .controllers import blueprints
+
+    for bp in blueprints():
+        app.register_blueprint(bp)
+
     # initialize the app with the extension
 
-    # Initialize the database
-    db.init_app(app)
-    from .models.user import User
+    # app.secret_key = "super secret string"  # Change this!
+    # print("!!! print change the secret key !!!")
 
-    with app.app_context():
-        db.create_all()
+    from .auth.loaders import load_user
 
     return app
 
