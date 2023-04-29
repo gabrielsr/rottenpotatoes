@@ -1,0 +1,48 @@
+{% macro confirmModalMacro() -%}
+<div class="modal fade" id="modalConfirm" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="formConfirm" method="POST" action="none" accept-charset="UTF-8" style="display:inline">
+        </form>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabel">
+                    <span class="textActionToConfirm"> change </span>
+                    <span class="textEntityRef">it </span>
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure that you want to <span class="textActionToConfirm">change</span> '<span
+                    class="textEntityRef">it </span>'?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger" data-target="#formConfirm" form="formConfirm"> Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro confirmModalScript() -%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(setupConfirmModal);
+    function setupConfirmModal() {
+
+        /* When clicked in an action, assign action to the confirmation form
+        if the user confirm the action, the form will be submitted,*/
+
+        $(".clickForActionToConfirm").on('click', function (e) {
+            var action = $(this).attr('data-action');
+            var entity_reference = $(this).attr('data-entity-reference');
+            var action_text = $(this).attr('data-action-text');
+            $("#formConfirm").attr("action", action);
+            $(".textEntityRef").text(entity_reference);
+            $(".textActionToConfirm").text(action_text);
+        });
+    }
+</script>
+{%- endmacro %}

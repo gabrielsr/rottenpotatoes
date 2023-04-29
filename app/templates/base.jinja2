@@ -12,10 +12,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     {% block styles %}
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     {% endblock %}
 
     <title>Your page title</title>
@@ -34,6 +34,7 @@
                 <ul class="navbar-nav mr-auto">
                     {{ render_nav_item('main.index', 'Home') }}
                     {% if current_user.is_authenticated %}
+                    {{ render_nav_item('users.index', 'Users' ) }}
                     {{ render_nav_item('auth.profile', current_user.username ) }}
                     {{ render_nav_item('auth.logout', 'Logout') }}
                     {% else %}
@@ -61,6 +62,7 @@
     {% block scripts %}
     <!-- Optional JavaScript -->
     {{ bootstrap.load_js() }}
+
     {% endblock %}
 </body>
 

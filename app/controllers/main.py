@@ -10,4 +10,4 @@ def index():
     :return: The response.
     """
 
-    return render_template("index.html")
+    return render_template("index.jinja2")

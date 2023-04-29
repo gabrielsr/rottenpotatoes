@@ -67,7 +67,7 @@ def create_app():
     from .controllers import blueprints
 
     for bp in blueprints():
-        app.register_blueprint(bp)
+        app.register_blueprint(bp, url_prefix=f"/{bp.name}")
 
     # initialize the app with the extension
 
@@ -88,9 +88,9 @@ app = create_app()
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template("error/404.html", error=e), 404
+    return render_template("error/404.jinja2", error=e), 404
 
 
 # @app.get("/")
 # def index():
-#     return render_template("index.html")
+#     return render_template("index.jinja2")

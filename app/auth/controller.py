@@ -29,7 +29,7 @@ from . import bp
 
 @bp.route("/", methods=("GET", "POST"), strict_slashes=False)
 def index():
-    return render_template("index.html", title="Home")
+    return render_template("index.jinja2", title="Home")
 
 
 print("register login")
@@ -53,12 +53,12 @@ def login():
         except Exception as e:
             flash(e, "danger")
 
-    return render_template("auth/login.html", form=form)
+    return render_template("auth/login.jinja2", form=form)
 
 
 @bp.route("/profile/", methods=("GET", "POST"), strict_slashes=False)
 def profile():
-    return render_template("auth/profile.html")
+    return render_template("auth/profile.jinja2")
 
 
 # Register route
@@ -101,7 +101,7 @@ def register():
             db.session.rollback()
             flash(f"An error occured !", "danger")
     return render_template(
-        "auth/register.html",
+        "auth/register.jinja2",
         form=form,
         text="Create account",
         title="Register",
