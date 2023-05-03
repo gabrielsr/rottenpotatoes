@@ -10,10 +10,10 @@ from ..models import User
 
 
 class login_form(FlaskForm):
-    email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
+    # email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
+    username = StringField(validators=[InputRequired()])
     pwd = PasswordField(validators=[InputRequired(), Length(min=8, max=72)])
     # Placeholder labels to enable form rendering
-    username = StringField(validators=[Optional()])
     submit_button = SubmitField("Submit This Form")
 
 

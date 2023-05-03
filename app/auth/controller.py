@@ -38,7 +38,7 @@ def login():
 
     if form.validate_on_submit():
         try:
-            user = User.query.filter_by(email=form.email.data).first()
+            user = User.query.filter_by(username=form.username.data).first()
             if user is None:
                 # In production, it is recommended to use a generic message
                 flash("User not found", "danger")

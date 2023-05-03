@@ -21,6 +21,7 @@ properties = {
 class _to:
     def __to(method):
         return lambda: url_for(f"{bp_name}.{method}")
+
     index = __to("index")
     edit = __to("edit")
     delete = __to("delete")
@@ -59,7 +60,7 @@ def edit(id):
     if form.validate_on_submit():
         form.populate_obj(user)
         db.session.commit()
-        return redirect(to.index())
+        return redirect(_to.index())
 
     return render_template(_j.edit, form=userform, **properties)
 
