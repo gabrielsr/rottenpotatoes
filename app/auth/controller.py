@@ -32,9 +32,6 @@ def index():
     return render_template("index.jinja2", title="Home")
 
 
-print("register login")
-
-
 @bp.route("/login/", methods=("GET", "POST"), strict_slashes=False)
 def login():
     form = login_form()
