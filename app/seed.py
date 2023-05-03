@@ -33,12 +33,3 @@ movies = [
     {"title": "Chicken Run", "rating": "G", "release_date": _d("21-Jun-2000")},
     {"title": "O Vingador", "rating": "NAO SEI", "release_date": _d("17-Apr-2019")},
 ]
-
-
-# categories = [{:tipo': 'Infantil', 'descrição': 'Filme para crianças', 'premiação': 'Oscar 2017',:release_date': '25-Nov-1992'},
-#           {:tipo': 'Desenho', 'descrição': 'Filme com animação', 'premiação': 'Oscar 2005',:release_date': '25-Nov-1990'}]
-
-
-# categories.each do |categoria|
-#   Category.create!(categoria)
-# end
