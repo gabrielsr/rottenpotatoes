@@ -77,9 +77,9 @@ def create_app():
     from .auth.loaders import load_user
 
     # initialize commands
-    from .cli_cmds import admin_cli
+    from .cli_cmds import seed_cli
 
-    app.cli.add_command(admin_cli)
+    app.cli.add_command(seed_cli)
 
     return app
 

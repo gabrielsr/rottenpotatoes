@@ -10,6 +10,12 @@ from dateutil import parser
 
 _d = parser.parse
 
+pwd_hash = "$2b$12$QLpUyPzW8PF6Kidk/fMXM.AQQSCI7UK7OsUr4k.2qVAbPq7yPdrhy"
+users = [
+    {"username": "admin", "email": "1@d.m", "pwd": pwd_hash},
+    {"username": "admin2", "email": "2@d.m", "pwd": pwd_hash},
+]
+
 movies = [
     {"title": "Aladdin", "rating": "G", "release_date": _d("25-Nov-1992")},
     {"title": "The Terminator", "rating": "R", "release_date": _d("26-Oct-1984")},
@@ -27,6 +33,7 @@ movies = [
     {"title": "Chicken Run", "rating": "G", "release_date": _d("21-Jun-2000")},
     {"title": "O Vingador", "rating": "NAO SEI", "release_date": _d("17-Apr-2019")},
 ]
+
 
 # categories = [{:tipo': 'Infantil', 'descrição': 'Filme para crianças', 'premiação': 'Oscar 2017',:release_date': '25-Nov-1992'},
 #           {:tipo': 'Desenho', 'descrição': 'Filme com animação', 'premiação': 'Oscar 2005',:release_date': '25-Nov-1990'}]
