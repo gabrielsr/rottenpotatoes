@@ -10,7 +10,6 @@ bp_name = "movies"
 bp = Blueprint(bp_name, __name__)
 from ..webapp import db
 
-
 properties = {
     "entity_name": "movie",
     "collection_name": "Movies",
@@ -76,6 +75,7 @@ def create():
         form.populate_obj(newmovie)
         db.session.add(newmovie)
         db.session.commit()
+        flash(f"'{ newmovie.title}' created")
         return redirect(_to.show(id=newmovie.id))
     else:
         flash("Error in form validation", "danger")
@@ -102,7 +102,8 @@ def edit(id):
     return render_template(_j.edit, form=userform, **properties)
 
 
-@bp.route("/<int:id>/edit", methods=["POST"])
+@bp.route("/<int:id>/edit", methods=["POST", "UPDATE"])
+@bp.route("/<int:id>", methods=["UPDATE"])
 def update(id):
     """
     Save Edited Entity
@@ -113,12 +114,13 @@ def update(id):
     if form.validate_on_submit():
         form.populate_obj(movie)
         db.session.commit()
+        flash(f"'{ movie.title}' updated")
         return redirect(_to.show(id=id))
     else:
         flash("Error in form validation", "danger")
 
 
-@bp.route("/<int:id>/delete", methods=["POST"])
+@bp.route("/<int:id>/delete", methods=["POST", "DELETE"])
 def destroy(id):
     """
     Delete Entity

@@ -15,7 +15,7 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-6">
-                <h1>Manage {{title}}</h1>
+                <h1>Manage {{collection_name}}</h1>
             </div>
             <div class="col-sm-6">
                 {% if current_user.is_authenticated %}
@@ -28,12 +28,6 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>
-                    <span class="custom-checkbox">
-                        <input type="checkbox" id="selectAll">
-                        <label for="selectAll"></label>
-                    </span>
-                </th>
                 {% for field in list_fields %}
                 <th>{{ field }}</th>
                 {% endfor %}
@@ -43,12 +37,6 @@
         <tbody>
             {% for entity in entities %}
             <tr>
-                <td>
-                    <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                        <label for="checkbox1"></label>
-                    </span>
-                </td>
                 {% for field in list_fields %}
                 <td>{{ entity[field] }}</td>
                 {% endfor %}

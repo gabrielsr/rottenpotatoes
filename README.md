@@ -1,6 +1,9 @@
+# Dependencies
+`poetry` 
+Ref. https://python-poetry.org
 
 # Install Dependencies
-` poetry install` 
+`poetry install` 
 
 # Run App
 
