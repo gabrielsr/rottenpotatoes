@@ -18,6 +18,10 @@
                 <h1>Manage {{title}}</h1>
             </div>
             <div class="col-sm-6">
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('movies.new') }}" class="btn btn-success">
+                    {{render_icon('file-plus') }} <span>Add New</span></a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -33,6 +37,7 @@
                 {% for field in list_fields %}
                 <th>{{ field }}</th>
                 {% endfor %}
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -48,14 +53,19 @@
                 <td>{{ entity[field] }}</td>
                 {% endfor %}
                 <td>
-                    <a href="{{ url_for('users.edit', id=entity.id) }}" class="edit" data-toggle="tooltip"
-                        data-placement="top" title="Tooltip on top"><i title="Edit"> {{
-                            render_icon('pencil-square') }}</i></a>
-                    <a href="#" class="clickForActionToConfirm" entity-id="{{entity.id}}" data-bs-toggle="modal"
-                        data-bs-target="#modalConfirm" data-entity-reference="{{entity.username}}"
-                        data-action="{{url_for('users.delete', id=entity.id)}}" data-action-text="delete">
+                    <a class="btn" href="{{ url_for('movies.show', id=entity.id) }}" title="View"> {{
+                        render_icon('search') }} </a>
+                    {% if current_user.is_authenticated %}
+                    <span> </span>
+                    <a class="btn" href="{{ url_for('movies.edit', id=entity.id) }}" title="Edit"> {{
+                        render_icon('pencil-square') }}</a>
+                    <span> </span>
+                    <a href="#" class="btn clickForActionToConfirm" entity-id="{{entity.id}}" data-bs-toggle="modal"
+                        data-bs-target="#modalConfirm" data-entity-reference="{{entity.title}}"
+                        data-action="{{url_for('movies.destroy', id=entity.id)}}" data-action-text="delete">
                         {{render_icon('x-circle') }}
                     </a>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

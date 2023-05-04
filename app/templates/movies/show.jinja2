@@ -1,0 +1,41 @@
+{% extends 'base.jinja2' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/component_confirm_modal.jinja2' import confirmModalMacro, confirmModalScript %}
+
+
+{% block header %}
+<h1>{% block title %}Show{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<h2> Details about <i>{{entity.title}}</i> </h2>
+<ul id="details">
+    <li> Rating: {{entity.rating}}</li>
+    <li> Released on: {{entity.release_date}}</li>
+</ul>
+
+
+<h3> Description: </h3>
+<p> {{ entity.description }} </p>
+<div class="btn-group" role="group">
+    <a href="{{ url_for('movies.index') }}" class="btn btn-primary">Back to List</a>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('movies.edit', id=entity.id) }}" class="btn btn-secondary">Edit</a>
+    <a href="#" class="clickForActionToConfirm btn btn-danger" entity-id="{{entity.id}}" data-bs-toggle="modal"
+        data-bs-target="#modalConfirm" data-entity-reference="{{entity.title}}"
+        data-action="{{url_for('movies.destroy', id=entity.id)}}" data-action-text="delete">
+        {{render_icon('x-circle') }} Delete
+    </a>
+    {% endif %}
+</div>
+
+{{ confirmModalMacro() }}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<!-- The contents of myscript.js will be loaded inside the script tag -->
+{{ confirmModalScript() }}
+{% endblock %}
