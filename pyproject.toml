@@ -16,6 +16,8 @@ flask-migrate = "^4.0.4"
 flask-bcrypt = "^1.0.1"
 email-validator = "^2.0.0.post2"
 python-dateutil = "^2.8.2"
+flask-dance = "^7.0.0"
+python-dotenv = "^1.0.0"
 
 
 [tool.poetry.group.test]  # This part can be left out

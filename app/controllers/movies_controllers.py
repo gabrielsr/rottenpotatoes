@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
 from wtforms import StringField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired
@@ -54,6 +55,7 @@ class EditForm(FlaskForm):
 
 
 @bp.route("/new", methods=["GET"])
+@login_required
 def new():
     """
     Page to create new Entity

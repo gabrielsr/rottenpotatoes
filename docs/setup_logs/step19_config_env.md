@@ -10,3 +10,6 @@ https://prettyprinted.com/tutorials/automatically_load_environment_variables_in_
 
 `poetry add python-dotenv`
 
+# Adding different environments
+
+Adding file `app/config.py` and loading it in `app/webapp.py`

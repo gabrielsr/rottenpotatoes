@@ -1,6 +1,5 @@
 from flask import render_template, redirect, flash, url_for, session
 
-from datetime import timedelta
 from sqlalchemy.exc import (
     IntegrityError,
     DataError,
