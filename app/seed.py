@@ -12,8 +12,8 @@ _d = parser.parse
 
 pwd_hash = "$2b$12$QLpUyPzW8PF6Kidk/fMXM.AQQSCI7UK7OsUr4k.2qVAbPq7yPdrhy"
 users = [
-    {"username": "admin", "email": "1@d.m", "pwd": pwd_hash},
-    {"username": "admin2", "email": "2@d.m", "pwd": pwd_hash},
+    {"username": "admin", "name": "ademir", "email": "1@d.m", "pwd": pwd_hash},
+    {"username": "admin2", "name": "ademar", "email": "2@d.m", "pwd": pwd_hash},
 ]
 
 movies = [
