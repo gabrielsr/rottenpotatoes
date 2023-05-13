@@ -2,14 +2,6 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/component_confirm_modal.jinja2' import confirmModalMacro, confirmModalScript %}
 {% block title %}Index{% endblock %}
-{% block head %}
-{{ super() }}
-<style type="text/css">
-    .important {
-        color: #336699;
-    }
-</style>
-{% endblock %}
 {% block content %}
 <div class="table-wrapper">
     <div class="table-title">
@@ -36,12 +28,12 @@
                 <td>{{ entity[field] }}</td>
                 {% endfor %}
                 <td>
-                    <a href="{{ url_for('users.edit', id=entity.id) }}" class="edit" data-toggle="tooltip"
+                    <a href="{{ url_for('moviegoers.edit', id=entity.id) }}" class="edit" data-toggle="tooltip"
                         data-placement="top" title="Tooltip on top"><i title="Edit"> {{
                             render_icon('pencil-square') }}</i></a>
                     <a href="#" class="clickForActionToConfirm" entity-id="{{entity.id}}" data-bs-toggle="modal"
                         data-bs-target="#modalConfirm" data-entity-reference="{{entity.username}}"
-                        data-action="{{url_for('users.delete', id=entity.id)}}" data-action-text="delete">
+                        data-action="{{url_for('moviegoers.destroy', id=entity.id)}}" data-action-text="delete">
                         {{render_icon('x-circle') }}
                     </a>
                 </td>

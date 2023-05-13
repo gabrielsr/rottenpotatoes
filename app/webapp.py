@@ -9,9 +9,9 @@ from .config import get_config
 # init extensions
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
-login_manager.login_view = "login"
+login_manager.login_view = "auth.login"
 login_manager.login_message_category = "info"
-db = SQLAlchemy()
+db:SQLAlchemy = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
 bootstrap = Bootstrap5()
@@ -47,7 +47,7 @@ def create_app():
         app.register_blueprint(bp, url_prefix=f"/{bp.name}")
 
     from .auth.loaders import load_user
-
+    # from .models import Moviegoer, PasswordCredential
     # initialize commands
     from .cli_cmds import seed_cli
     app.cli.add_command(seed_cli)

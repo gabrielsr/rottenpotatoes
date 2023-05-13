@@ -1,7 +1,7 @@
 from flask.cli import AppGroup
 from .webapp import db
-from .models import Movie, User
-from .seed import movies, users
+from .models import Movie, Moviegoer, PasswordCredential, Principal
+from .seed import movies, moviegoers, credentials, principals
 
 seed_cli = AppGroup("seed")
 
@@ -17,6 +17,18 @@ def seed_movies():
 @seed_cli.command("users")
 def seed_users():
     "Add seed data to the database."
-    for user in users:
-        db.session.add(User(**user))
+    for p in principals:
+        db.session.add(Principal(**p))
+    for m in moviegoers:
+        db.session.add(Moviegoer(**m))
+    for c in credentials:
+        db.session.add(PasswordCredential(**c))
+
     db.session.commit()
+
+
+@seed_cli.command("all")
+def seed_all():
+    "Add seed data to the database."
+    seed_movies()
+    seed_users()

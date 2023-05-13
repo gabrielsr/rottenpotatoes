@@ -15,6 +15,7 @@
     {% block styles %}
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     {% endblock %}
 
@@ -35,7 +36,7 @@
                     {{ render_nav_item('main.index', 'Home') }}
                     {{ render_nav_item('movies.index', 'Movies') }}
                     {% if current_user.is_authenticated %}
-                    {{ render_nav_item('users.index', 'Users' ) }}
+                    {{ render_nav_item('moviegoers.index', 'Users' ) }}
                     {{ render_nav_item('auth.profile', current_user.username ) }}
                     {{ render_nav_item('auth.logout', 'Logout') }}
                     {% else %}
@@ -51,7 +52,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="text-center">
+    <footer class="clearfix text-center">
         {% block footer %}
         <small> &copy; 2023–
             <script>document.write(new Date().getFullYear())</script> <a

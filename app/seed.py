@@ -10,13 +10,30 @@ from dateutil import parser
 
 _d = parser.parse
 
-pwd_hash = "$2b$12$QLpUyPzW8PF6Kidk/fMXM.AQQSCI7UK7OsUr4k.2qVAbPq7yPdrhy"
-users = [
-    {"username": "admin", "name": "ademir", "email": "1@d.m", "pwd": pwd_hash},
-    {"username": "admin2", "name": "ademar", "email": "2@d.m", "pwd": pwd_hash},
+pwd_hash = "$2b$12$QLpUyPzW8PF6Kidk/fMXM.AQQSCI7UK7OsUr4k.2qVAbPq7yPdrhy" # pwd:asdasdasd
+principals = [
+    {"id": 1, "username": "alice"},
+    {"id": 2, "username": "bod"},
+    {"id": 3, "username": "carol"},
+]
+
+moviegoers = [
+    {"id": 1,"principal_id": 1, "name": "Alice A."},
+    {"id": 2, "principal_id": 2, "name": "Bob B."},
+    {"id": 3, "principal_id": 3, "name": "Carol C."}
+]
+
+credentials = [
+    {"username": "alice", "password": pwd_hash, "principal_id": 1},
+    {"username": "bob", "password": pwd_hash, "principal_id": 2},
+    {"username": "carol", "password": pwd_hash, "principal_id": 3}
 ]
 
 movies = [
+    {"id": 3, "title": "Inception", "rating": "PG-13", "release_date": _d("16-Jul-2010")},
+    {"id": 41, "title": "Star Wars", "rating": "PG", "release_date": _d("25-May-1977")},
+    {"id": 43, "title": "It's complicated", "rating": "R", "release_date": _d("25-Dec-2009")},
+    {"title": "Toy Story", "rating": "G", "release_date": _d("22-Nov-1995")},
     {"title": "Aladdin", "rating": "G", "release_date": _d("25-Nov-1992")},
     {"title": "The Terminator", "rating": "R", "release_date": _d("26-Oct-1984")},
     {"title": "When Harry Met Sally", "rating": "R", "release_date": _d("21-Jul-1989")},

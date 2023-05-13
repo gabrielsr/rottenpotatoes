@@ -6,7 +6,9 @@ class Config(object):
     SECRET_KEY = os.environ.get("SECRET_KEY", "secret-key") # In production, should be set to a random string
     GOOGLE_OAUTH_CLIENT_ID =  os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
     GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
-     
+    GITHUB_OAUTH_CLIENT_ID = os.environ.get("GITHUB_OAUTH_CLIENT_ID")
+    GITHUB_OAUTH_CLIENT_SECRET = os.environ.get("GITHUB_OAUTH_CLIENT_SECRET")
+
 
 class ProductionConfig(Config):
     DATABASE_URI = 'mysql://user@localhost/foo'

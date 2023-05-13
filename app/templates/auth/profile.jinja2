@@ -13,8 +13,7 @@
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{{url_for('home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{url_for('auth.index')}}">User</a></li>
-            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            <li class="breadcrumb-item active" aria-current="page">My Profile</li>
           </ol>
         </nav>
       </div>
@@ -24,11 +23,11 @@
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center">
-            <img src="{{ current_user.picture }}" alt="avatar"
+            <img src="{{ profile.picture }}" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">{{ current_user.name }} </h5>
-            <p class="text-muted mb-1"> {{ current_user.role }} </p>
-            <p class="text-muted mb-4"> {{ current_user.course }} </p>
+            <h5 class="my-3">{{ profile.name }} </h5>
+            <p class="text-muted mb-1"> {{ profile.role }} </p>
+            <p class="text-muted mb-4"> {{ profile.course }} </p>
             <div class="d-flex justify-content-center mb-2">
               <button type="button" class="btn btn-primary">Follow</button>
               <button type="button" class="btn btn-outline-primary ms-1">Message</button>
@@ -40,23 +39,23 @@
             <ul class="list-group list-group-flush rounded-3">
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <i class="fas fa-globe fa-lg text-warning"></i>
-                <p class="mb-0"> {{ current_user.url }} </p>
+                <p class="mb-0"> {{ profile.url }} </p>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                <p class="mb-0"> {{ current_user.github }} </p>
+                <p class="mb-0"> {{ profile.github }} </p>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                <p class="mb-0"> {{ current_user.twitter }} </p>
+                <p class="mb-0"> {{ profile.twitter }} </p>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                <p class="mb-0"> {{ current_user.instagram }}</p>
+                <p class="mb-0"> {{ profile.instagram }}</p>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <i class="fab fa-tiktok-f fa-lg" style="color: #3b5998;"></i>
-                <p class="mb-0">{{ current_user.tiktok }}</p>
+                <p class="mb-0">{{ profile.tiktok }}</p>
               </li>
             </ul>
           </div>
@@ -70,7 +69,7 @@
                 <p class="mb-0">Full Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0"> {{ current_user.name }} </p>
+                <p class="text-muted mb-0"> {{ profile.name }} </p>
               </div>
             </div>
             <hr>
@@ -79,7 +78,7 @@
                 <p class="mb-0">Email</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0"> {{ current_user.email }} </p>
+                <p class="text-muted mb-0"> {{ profile.email }} </p>
               </div>
             </div>
           </div>

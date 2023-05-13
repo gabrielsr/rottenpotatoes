@@ -1,19 +1,20 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash
+from flask_login import login_required
 from wtforms import StringField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired
 
-from ..models import User
+from ..models import Moviegoer
 
-bp_name = "users"
+bp_name = "moviegoers"
 
 bp = Blueprint(bp_name, __name__)
 from ..webapp import db
 
 
 properties = {
-    "entity": "user",
-    "title": "Users",
+    "entity": "moviegoer",
+    "title": "Moviegoers",
     "list_fields": ["id", "username", "email"],
 }
 
@@ -33,12 +34,13 @@ class _j:
 
 
 @bp.route("/", methods=["GET", "POST"])
+@login_required
 def index():
     """
     Index page.
     :return: The response.
     """
-    users = User.query.all()
+    users = Moviegoer.query.all()
     return render_template(_j.index, entities=users, **properties)
 
 
@@ -48,33 +50,28 @@ class EditForm(FlaskForm):
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
+@login_required
 def edit(id):
     """
     Edit page.
     :return: The response.
     """
-    user = db.get_or_404(User, id)
-    userform = EditForm(formdata=request.form, obj=user)
-
-    form = EditForm(obj=user)
-    if form.validate_on_submit():
-        form.populate_obj(user)
-        db.session.commit()
-        return redirect(_to.index())
-
-    return render_template(_j.edit, form=userform, **properties)
+    entity = db.get_or_404(Moviegoer, id)
+    form = EditForm(obj=entity)
+    return render_template(_j.edit, form=form, **properties)
 
 
 @bp.route("/<int:id>/edit", methods=["POST"])
-def do_edit(id):
+@login_required
+def update(id):
     """
     Save Edited Entity
     :return: redirect to list
     """
     form = EditForm()
     if form.validate_on_submit():
-        user = db.get_or_404(User, id)
-        form.populate_obj(user)
+        entity = db.get_or_404(Moviegoer, id)
+        form.populate_obj(entity)
         db.session.commit()
         return redirect(_to.index())
     else:
@@ -82,12 +79,13 @@ def do_edit(id):
 
 
 @bp.route("/<int:id>/delete", methods=["POST"])
-def delete(id):
+@login_required
+def destroy(id):
     """
     Delete Entity
     :return: redirect to list
     """
-    obj = User.query.filter_by(id=id).one()
+    obj = Moviegoer.query.filter_by(id=id).one()
     db.session.delete(obj)
     db.session.commit()
     flash("Entry deleted")

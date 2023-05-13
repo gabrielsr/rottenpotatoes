@@ -1,6 +1,5 @@
-from flask import Blueprint
-from .oath import google_blueprint
-bp = Blueprint("auth", __name__)
-oath_blueprints = [google_blueprint]
 
-from .controller import *
+from .oauth_controller import ggbp, ghbp
+oath_blueprints = [ggbp, ghbp]
+
+from .pwd_auth_controller import *

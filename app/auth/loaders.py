@@ -1,10 +1,12 @@
-from ..models.user import User
+from ..models import Principal
 from ..webapp import login_manager
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+def load_user(uid):
+    if not uid or uid == "None":
+        return None
+    return Principal.query.get(int(uid))
 
 
 # @login_manager.request_loader
