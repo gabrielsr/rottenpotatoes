@@ -4,6 +4,8 @@ from wtforms import StringField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired
 
+from app.helpers.form_view import form_edit_view, form_validated, form_view
+
 from ..models import Movie
 
 bp_name = "movies"
@@ -47,7 +49,7 @@ def index():
     return render_template(_j.index, entities=movies, **properties)
 
 
-class EditForm(FlaskForm):
+class MovieForm(FlaskForm):
     title = StringField("title", validators=[InputRequired()])
     rating = StringField("rating")
     description = StringField("description")
@@ -56,31 +58,31 @@ class EditForm(FlaskForm):
 
 @bp.route("/new", methods=["GET"])
 @login_required
-def new():
+@form_view(MovieForm)
+def new(form: MovieForm):
     """
     Page to create new Entity
     :return: render create template
     """
-    form = EditForm()
     return render_template(_j.new, form=form, **properties)
 
 
 @bp.route("/", methods=["POST"])
-def create():
+@form_validated(MovieForm, new)
+def create(form: MovieForm):
     """
     Create new entity
+    If form is valid, create new entity and redirect to show page
+    If form is not valid, render new template with errors
+
     :return: redirect to view new entity
     """
-    form = EditForm(formdata=request.form)
-    if form.validate_on_submit():
-        newmovie = Movie()
-        form.populate_obj(newmovie)
-        db.session.add(newmovie)
-        db.session.commit()
-        flash(f"'{ newmovie.title}' created")
-        return redirect(_to.show(id=newmovie.id))
-    else:
-        flash("Error in form validation", "danger")
+    newmovie = Movie()
+    form.populate_obj(newmovie)
+    db.session.add(newmovie)
+    db.session.commit()
+    flash(f"'{ newmovie.title}' created")
+    return redirect(_to.show(id=newmovie.id))
 
 
 @bp.route("/<int:id>/show", methods=["GET"])
@@ -94,35 +96,34 @@ def show(id):
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
-def edit(id):
+@form_edit_view(MovieForm, entitycls=Movie)
+def edit(form: MovieForm):
     """
     Edit page.
     :return: The response.
     """
-    movie = db.get_or_404(Movie, id)
-    userform = EditForm(formdata=request.form, obj=movie)
-    return render_template(_j.edit, form=userform, **properties)
+    return render_template(_j.edit, form=form, **properties)
 
 
-@bp.route("/<int:id>/edit", methods=["POST", "UPDATE"])
+@bp.route("/<int:id>/edit", methods=["POST"])
 @bp.route("/<int:id>", methods=["UPDATE"])
-def update(id):
+@form_validated(MovieForm, edit)
+def update(form: MovieForm, id):
     """
     Save Edited Entity
+    If form is valid, update entity and redirect to show page
+    If form is not valid, render edit template with errors
     :return: redirect to show entity
     """
     movie = db.get_or_404(Movie, id)
-    form = EditForm(formdata=request.form, obj=movie)
-    if form.validate_on_submit():
-        form.populate_obj(movie)
-        db.session.commit()
-        flash(f"'{ movie.title}' updated")
-        return redirect(_to.show(id=id))
-    else:
-        flash("Error in form validation", "danger")
+    form.populate_obj(movie)
+    db.session.commit()
+    flash(f"'{ movie.title}' updated")
+    return redirect(_to.show(id=id))
 
 
 @bp.route("/<int:id>/delete", methods=["POST", "DELETE"])
+@bp.route("/<int:id>", methods=["DELETE"])
 def destroy(id):
     """
     Delete Entity
