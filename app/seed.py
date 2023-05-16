@@ -24,9 +24,9 @@ moviegoers = [
 ]
 
 credentials = [
-    {"username": "alice", "password": pwd_hash, "principal_id": 1},
-    {"username": "bob", "password": pwd_hash, "principal_id": 2},
-    {"username": "carol", "password": pwd_hash, "principal_id": 3}
+    {"principal_id": 1, "password": pwd_hash },
+    {"principal_id": 2, "password": pwd_hash },
+    {"principal_id": 3, "password": pwd_hash }
 ]
 
 movies = [
