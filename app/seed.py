@@ -50,3 +50,7 @@ movies = [
     {"title": "Chicken Run", "rating": "G", "release_date": _d("21-Jun-2000")},
     {"title": "O Vingador", "rating": "NAO SEI", "release_date": _d("17-Apr-2019")},
 ]
+
+reviews = [
+    { "id":1, "movie_id": 3, "moviegoer_id": 1, "potatoes": 5 },
+]

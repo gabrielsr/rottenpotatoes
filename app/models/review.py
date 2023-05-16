@@ -13,6 +13,10 @@ class Review(db.Model):
     moviegoer: Mapped["Moviegoer"] = relationship(Moviegoer, back_populates="reviews")
     potatoes = db.Column(db.Integer, nullable=False)
 
+    @property
+    def moviegoer_name(self):
+        return self.moviegoer.name
+    
     def __repr__(self):
         return "<Review %r>" % self.id
 

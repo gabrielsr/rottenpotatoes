@@ -21,7 +21,7 @@ pmodelcls = Movie
 properties = {
     "entity_name": "review",
     "collection_name": "Reviews",
-    "list_fields": ["potatoes", "moviegoer.name"],
+    "list_fields": ["potatoes", "moviegoer_name"],
 }
 
 def register_blueprint(parent_blueprint: Blueprint):
