@@ -1,9 +1,10 @@
+from typing import List
 from . import db
 from sqlalchemy.sql import func
-
+from sqlalchemy.orm import relationship, Mapped
 
 class Movie(db.Model):
-    __tablename__ = "movie"
+    __tablename__ = "movies"
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
@@ -14,6 +15,7 @@ class Movie(db.Model):
     updated_at = db.Column(
         db.DateTime, nullable=False, default=func.now(), onupdate=func.now()
     )
+    reviews:  Mapped[List["Reviews"]] = relationship("Review", back_populates="movie")
 
     def __repr__(self):
         return "<Movie %r>" % self.id

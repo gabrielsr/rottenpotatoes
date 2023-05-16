@@ -1,3 +1,4 @@
+from typing import List
 from . import db
 from sqlalchemy import ForeignKey
 from .principal import Principal
@@ -9,6 +10,7 @@ class Moviegoer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     principal_id = db.Column(db.Integer, ForeignKey(Principal.id), unique=True)
     principal: Mapped[Principal] = relationship(back_populates="me")
+    reviews: Mapped[List["Review"]] = relationship(back_populates="moviegoer")
     
     name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80))

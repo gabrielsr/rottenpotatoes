@@ -8,9 +8,13 @@ from app.helpers.form_view import form_edit_view, form_validated, form_view
 
 from ..models import Movie
 
+from .reviews_controller import register_blueprint as register_reviews_blueprint
+
 bp_name = "movies"
 
 bp = Blueprint(bp_name, __name__)
+register_reviews_blueprint(bp)
+
 from ..webapp import db
 
 properties = {
@@ -18,7 +22,6 @@ properties = {
     "collection_name": "Movies",
     "list_fields": ["title", "rating", "description"],
 }
-
 
 class _to:
     def __to(method):
