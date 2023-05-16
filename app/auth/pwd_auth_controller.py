@@ -9,22 +9,20 @@ from flask_login import (
     login_required,
 )
 
-from app.helpers.form_view import FormGeneralError, form_view, form_validated, get_form_data
+from app.helpers.form_view import form_view, form_validated, get_form_data
 
 from .forms import login_form, register_form
-from .register_service import check_pwd_credential, register_with_pwd
+from .register_service import register_with_pwd
 from flask_wtf import FlaskForm
+from .session_controller import login as login_view
 
-bp = Blueprint("auth", __name__)
+bp = Blueprint("passwd", __name__)
 
 
-@bp.route("/login", methods=["GET"], strict_slashes=False)
-@form_view(login_form)
-def login(form: FlaskForm):
-    return render_template("auth/login.jinja2", form=form)
+
 
 @bp.route("/login", methods=["POST"], strict_slashes=False)
-@form_validated(login_form, login)
+@form_validated(login_form, login_view)
 def check_credentials(form):
     login_user(form.principal.data)
     flash("Logged in successfully.", "success")
@@ -58,19 +56,6 @@ def create(form):
 
     return register(form)
 
-
-@bp.route("/profile/", methods=["GET"], strict_slashes=False)
-@login_required
-def profile():
-    me = current_user.me
-    return render_template("auth/profile.jinja2", profile=me)
-
-@bp.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for("auth.login"))
-
 @bp.route("/reset-password")
-def forgot_password():
+def forgot():
     raise NotImplementedError

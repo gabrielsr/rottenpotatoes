@@ -8,9 +8,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 class Credential(db.Model):
-    __tablename__ = "credential"
+    __tablename__ = "credentials"
     id = db.Column(db.Integer, primary_key=True)
-    principal_id = db.Column(ForeignKey("principal.id"))
+    principal_id = db.Column(ForeignKey("principals.id"))
     principal: Mapped[Principal] = relationship("Principal", lazy='joined')
 
     type = db.Column(db.String(20))

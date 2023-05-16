@@ -9,7 +9,7 @@ from .config import get_config
 # init extensions
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
-login_manager.login_view = "auth.login"
+login_manager.login_view = "auth.session.login"
 login_manager.login_message_category = "info"
 db:SQLAlchemy = SQLAlchemy()
 migrate = Migrate()
@@ -33,13 +33,8 @@ def create_app():
     bootstrap.init_app(app)
 
     # register flask blueprints
-    from .auth import bp as auth_bp
-    from .auth import oath_blueprints
-
-    for bp in oath_blueprints:
-        app.register_blueprint(bp, url_prefix=f"/{bp.name}")
-
-    app.register_blueprint(auth_bp)
+    from .auth import auth_bp
+    app.register_blueprint(auth_bp, url_prefix=f"/{auth_bp.name}")
 
     from .controllers import blueprints
 

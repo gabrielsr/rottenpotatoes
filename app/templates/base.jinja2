@@ -37,10 +37,10 @@
                     {{ render_nav_item('movies.index', 'Movies') }}
                     {% if current_user.is_authenticated %}
                     {{ render_nav_item('moviegoers.index', 'Users' ) }}
-                    {{ render_nav_item('auth.profile', current_user.username ) }}
-                    {{ render_nav_item('auth.logout', 'Logout') }}
+                    {{ render_nav_item('auth.profile.me', current_user.username ) }}
+                    {{ render_nav_item('auth.session.logout', 'Logout') }}
                     {% else %}
-                    {{ render_nav_item('auth.login', 'Login') }}
+                    {{ render_nav_item('auth.session.login', 'Login') }}
                     {% endif %}
                 </ul>
             </div>
