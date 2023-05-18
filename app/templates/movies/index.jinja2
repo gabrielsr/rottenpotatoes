@@ -45,6 +45,9 @@
                         data-action="{{url_for('movies.destroy', id=entity.id)}}" data-action-text="delete">
                         {{render_icon('x-circle') }}
                     </a>
+                    <span> </span>
+                    <a href="{{ url_for('movies.reviews.new', movie_id=entity.id) }}" class="btn">
+                        {{render_icon('star') }} </a>
                     {% endif %}
                 </td>
             </tr>

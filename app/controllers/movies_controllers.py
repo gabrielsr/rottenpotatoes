@@ -108,8 +108,8 @@ def edit(form: MovieForm):
     return render_template(_j.edit, form=form, **properties)
 
 
+#@bp.route("/<int:id>", methods=["UPDATE"])
 @bp.route("/<int:id>/edit", methods=["POST"])
-@bp.route("/<int:id>", methods=["UPDATE"])
 @form_validated(MovieForm, edit)
 def update(form: MovieForm, id):
     """
@@ -125,8 +125,8 @@ def update(form: MovieForm, id):
     return redirect(_to.show(id=id))
 
 
-@bp.route("/<int:id>/delete", methods=["POST", "DELETE"])
-@bp.route("/<int:id>", methods=["DELETE"])
+#@bp.route("/<int:id>", methods=["DELETE"])
+@bp.route("/<int:id>/delete", methods=["POST"])
 def destroy(id):
     """
     Delete Entity

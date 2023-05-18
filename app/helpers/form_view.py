@@ -18,12 +18,13 @@ def form_view(form_class):
             if form:
                 return func(form, *wrargs, **wrkwargs)
             else:
-                return func(form_class(), *wrargs, **wrkwargs)
+                form = form_class(**wrkwargs)
+                return func(form, *wrargs, **wrkwargs)
         return wrapper
 
     return decorated_view
 
-def form_edit_view(form_class, entitycls, *aargs, **akwargs):
+def form_edit_view(form_class, entitycls, id_key='id', *aargs, **akwargs):
     # """"
     # Decorator for views that have forms.
     # If the view is called with a form it will call the view with the exiting form
@@ -33,11 +34,14 @@ def form_edit_view(form_class, entitycls, *aargs, **akwargs):
     # """
     def decorated_view(func):
         @wraps(func)
-        def wrapper(form=None, id=None, *wargs, **wkwargs):
+        def wrapper(form=None, *wargs, **wkwargs):
             if form:
                 return func(form, *wargs, **wkwargs)
             else:
                 from ..webapp import db
+                id = wkwargs.get(id_key, None)
+                if not id:
+                    raise Exception(f"Error using @form_edit_view. Missing {id_key} parameter")
                 entity = db.get_or_404(entitycls, id)
                 form = form_class(obj=entity)
                 return func(form, *wargs, **wkwargs)
@@ -64,14 +68,15 @@ def form_validated(form_class, form_view):
             if form.validate_on_submit():
                 try:
                     return func(form, *wargs, **wkwargs)
+                except ValueError as e:
+                    flash(str(e), "danger")
                 except FormGeneralError as e:
                     flash(str(e), "danger")
-                    return form_view(form)
                 except Exception as e:
                     from app.webapp import app
                     flash('Internal Error. Please try later', "danger")
                     app.logger.error(e)
-                    return form_view(form)
+                return form_view(form, *wargs, **wkwargs)
             else:
                 return form_view(form, *wargs, **wkwargs)
         return wrapper
