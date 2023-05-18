@@ -11,10 +11,10 @@ class Movie(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(64))
     rating: Mapped[str] = mapped_column(String(6))
-    description: Mapped[str] = mapped_column(String(256))
+    description: Mapped[Optional[str]] = mapped_column(String(256))
     release_date: Mapped[Optional[datetime]] = mapped_column()
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
-    created_at: Mapped[datetime] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         default=datetime.utcnow, onupdate=datetime.utcnow)
     reviews:  Mapped[list["Review"]] = relationship(back_populates="movie")
 

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from . import db
 from sqlalchemy import ForeignKey, String
 from .principal import Principal
@@ -11,12 +11,12 @@ class Moviegoer(db.Model):
     principal_id:Mapped[int] = mapped_column(ForeignKey(Principal.id), unique=True) #*one-to-one
     principal: Mapped[Principal] = relationship(back_populates="me")
     
-    reviews: Mapped[List["Review"]] = relationship(back_populates="moviegoer") # one-to-*many
+    reviews: Mapped[list["Review"]] = relationship(back_populates="moviegoer") # one-to-*many
     
     name: Mapped[str] = mapped_column(String(80), nullable=False)
-    email: Mapped[str] = mapped_column(String(80))
-    picture: Mapped[str] = mapped_column(String(80))
-    bio: Mapped[str] = mapped_column(String(300))
+    email: Mapped[Optional[str]] = mapped_column(String(80))
+    picture: Mapped[Optional[str]] = mapped_column(String(80))
+    bio: Mapped[Optional[str]] = mapped_column(String(300))
 
     @property
     def username(self):

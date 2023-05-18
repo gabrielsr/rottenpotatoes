@@ -36,3 +36,6 @@ Ref. https://flask-migrate.readthedocs.io/en/latest/
 ## After updating the model
 `flask db upgrade`
 
+## "Hard Reset": Remove DB, initialize and reseed
+
+`rm -f app/data.sqlite && rm -rf migrations && flask db init && flask db migrate -m "init" && flask db upgrade  && flask seed users && flask seed reviews && flask seed movies`

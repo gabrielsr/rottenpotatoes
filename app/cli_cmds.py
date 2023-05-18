@@ -12,6 +12,7 @@ def seed_movies():
     "Add seed data to the database."
     for movie in movies:
         db.session.add(Movie(**movie))
+    db.session.commit()
 
 @seed_cli.command("reviews")
 def seed_reviews():
@@ -36,6 +37,6 @@ def seed_users():
 @seed_cli.command("all")
 def seed_all():
     "Add seed data to the database."
-    seed_movies()
-    seed_users()
-    seed_reviews()
+    # seed_movies()
+    # seed_users()
+    # seed_reviews()

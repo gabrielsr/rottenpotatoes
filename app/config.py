@@ -8,10 +8,11 @@ class Config(object):
     GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
     GITHUB_OAUTH_CLIENT_ID = os.environ.get("GITHUB_OAUTH_CLIENT_ID")
     GITHUB_OAUTH_CLIENT_SECRET = os.environ.get("GITHUB_OAUTH_CLIENT_SECRET")
+    SQLALCHEMY_ECHO = os.environ.get("SQLALCHEMY_ECHO", False ) # Print in console all SQL commands
 
 
 class ProductionConfig(Config):
-    DATABASE_URI = 'mysql://user@localhost/foo'
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI", 'mysql://user@localhost/foo')
 
 class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(basedir, 'data.sqlite')}"
@@ -23,7 +24,7 @@ class TestingConfig(Config):
 
 
 config_map = {
-    "development": DevelopmentConfig,
+    "development":  DevelopmentConfig,
     "production": ProductionConfig,
     "testing": TestingConfig,
 }
