@@ -1,22 +1,24 @@
+from sqlalchemy import ForeignKey, Integer
 from . import db
-from sqlalchemy.orm import relationship, Mapped
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from .movie import Movie
 from .moviegoer import Moviegoer
 
 class Review(db.Model):
     __tablename__ = "reviews"
 
-    id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), nullable=False)
-    moviegoer_id = db.Column(db.Integer, db.ForeignKey("moviegoers.id"), nullable=False)
-    movie: Mapped["Movie"] = relationship(Movie, back_populates="reviews")
-    moviegoer: Mapped["Moviegoer"] = relationship(Moviegoer, back_populates="reviews")
-    potatoes = db.Column(db.Integer, nullable=False)
+    id:Mapped[int] =    mapped_column(primary_key=True)
+    movie_id:Mapped[int] = mapped_column(ForeignKey("movies.id"), index=True)
+    moviegoer_id:Mapped[int] = mapped_column(ForeignKey("moviegoers.id")) 
+    movie: Mapped["Movie"] = relationship(back_populates="reviews")  #one-to-*many
+    moviegoer: Mapped["Moviegoer"] = relationship(back_populates="reviews") #one-to-*many
+    potatoes:Mapped[int] = mapped_column(Integer)
+
 
     @property
     def moviegoer_name(self):
         return self.moviegoer.name
     
     def __repr__(self):
-        return "<Review %r>" % self.id
+        return f'Review ({self.id}, {self.movie_id}, {self.moviegoer_id}, {self.potatoes})'
 

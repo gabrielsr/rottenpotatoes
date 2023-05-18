@@ -38,3 +38,4 @@ def seed_all():
     "Add seed data to the database."
     seed_movies()
     seed_users()
+    seed_reviews()

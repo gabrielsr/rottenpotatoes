@@ -1,14 +1,15 @@
+from sqlalchemy import String
 from . import db
 from flask_login import UserMixin
-from sqlalchemy.orm import relationship, Mapped
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 class Principal(UserMixin, db.Model):
     __tablename__ = "principals"
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False)
-    me: Mapped["Moviegoer"] = relationship(back_populates="principal")
+    id:Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(20), nullable=False)
+    me: Mapped["Moviegoer"] = relationship(back_populates="principal") # one-to-one
 
     def __repr__(self):
-        return "<Principal %r>" % self.id
+        return f'Principal ({self.id}, {self.username})'
 

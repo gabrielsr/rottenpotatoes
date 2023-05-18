@@ -1,21 +1,22 @@
-from typing import List
+from datetime import datetime
+from typing import Optional
 from . import db
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship, Mapped
+from sqlalchemy import String
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+
 
 class Movie(db.Model):
     __tablename__ = "movies"
 
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
-    rating = db.Column(db.String)
-    description = db.Column(db.String)
-    release_date = db.Column(db.DateTime)
-    created_at = db.Column(db.DateTime, nullable=False, default=func.now())
-    updated_at = db.Column(
-        db.DateTime, nullable=False, default=func.now(), onupdate=func.now()
-    )
-    reviews:  Mapped[List["Reviews"]] = relationship("Review", back_populates="movie")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(String(64))
+    rating: Mapped[str] = mapped_column(String(6))
+    description: Mapped[str] = mapped_column(String(256))
+    release_date: Mapped[Optional[datetime]] = mapped_column()
+    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(
+        default=datetime.utcnow, onupdate=datetime.utcnow)
+    reviews:  Mapped[list["Review"]] = relationship(back_populates="movie")
 
     def __repr__(self):
-        return "<Movie %r>" % self.id
+        return f'Movie ({self.id}, {self.title}, {self.rating}, {self.release_date})'
