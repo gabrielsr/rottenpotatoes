@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired
 
 from app.helpers.form_view import form_edit_view, form_validated, form_view
+from app.helpers.standard_paths import get_standard_template_paths
 
 from ..models import Movie
 
@@ -23,6 +24,7 @@ properties = {
     "list_fields": ["title", "rating", "description"],
 }
 
+
 class _to:
     def __to(method):
         return lambda **kwargs: url_for(f"{bp_name}.{method}", **kwargs)
@@ -33,14 +35,7 @@ class _to:
     delete = __to("delete")
 
 
-class _j:
-    index = f"{bp_name}/index.jinja2"
-    edit = f"{bp_name}/edit.jinja2"
-    show = f"{bp_name}/show.jinja2"
-    new = f"{bp_name}/new.jinja2"
-    create = f"{bp_name}/create.jinja2"
-    search_tmdb = f"{bp_name}/search_tmdb.jinja2"
-
+tmpl = get_standard_template_paths(bp_name)
 
 @bp.route("/", methods=["GET"])
 def index():
@@ -49,8 +44,18 @@ def index():
     :return: The response.
     """
     movies = Movie.query.all()
-    return render_template(_j.index, entities=movies, **properties)
+    return render_template(tmpl.index, entities=movies, **properties)
 
+
+
+@bp.route("/<int:id>/show", methods=["GET"])
+def show(id: int):
+    """
+    Show page.
+    :return: The response.
+    """
+    movie = db.get_or_404(Movie, id)
+    return render_template(tmpl.show, entity=movie, **properties)
 
 class MovieForm(FlaskForm):
     title = StringField("title", validators=[InputRequired()])
@@ -67,7 +72,7 @@ def new(form: MovieForm):
     Page to create new Entity
     :return: render create template
     """
-    return render_template(_j.new, form=form, **properties)
+    return render_template(tmpl.new, form=form, **properties)
 
 
 @bp.route("/", methods=["POST"])
@@ -85,33 +90,23 @@ def create(form: MovieForm):
     db.session.add(newmovie)
     db.session.commit()
     flash(f"'{ newmovie.title}' created")
-    return redirect(_to.show(id=newmovie.id))
-
-
-@bp.route("/<int:id>/show", methods=["GET"])
-def show(id):
-    """
-    Show page.
-    :return: The response.
-    """
-    movie = db.get_or_404(Movie, id)
-    return render_template(_j.show, entity=movie, **properties)
+    return redirect(url_for('.show', id=newmovie.id))
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
 @form_edit_view(MovieForm, entitycls=Movie)
-def edit(form: MovieForm):
+def edit(form: MovieForm, id: int):
     """
     Edit page.
     :return: The response.
     """
-    return render_template(_j.edit, form=form, **properties)
+    return render_template(tmpl.edit, form=form, **properties)
 
 
-#@bp.route("/<int:id>", methods=["UPDATE"])
+# @bp.route("/<int:id>", methods=["UPDATE"])
 @bp.route("/<int:id>/edit", methods=["POST"])
 @form_validated(MovieForm, edit)
-def update(form: MovieForm, id):
+def update(form: MovieForm, id: int):
     """
     Save Edited Entity
     If form is valid, update entity and redirect to show page
@@ -122,12 +117,12 @@ def update(form: MovieForm, id):
     form.populate_obj(movie)
     db.session.commit()
     flash(f"'{ movie.title}' updated")
-    return redirect(_to.show(id=id))
+    return redirect(url_for('.show', id=id))
 
 
-#@bp.route("/<int:id>", methods=["DELETE"])
+# @bp.route("/<int:id>", methods=["DELETE"])
 @bp.route("/<int:id>/delete", methods=["POST"])
-def destroy(id):
+def destroy(id: int):
     """
     Delete Entity
     :return: redirect to list
@@ -136,4 +131,4 @@ def destroy(id):
     db.session.delete(movie)
     db.session.commit()
     flash(f"'{ movie.title}' deleted")
-    return redirect(_to.index())
+    return redirect(url_for('.index'))
