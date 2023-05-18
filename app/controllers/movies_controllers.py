@@ -47,7 +47,6 @@ def index():
     return render_template(tmpl.index, entities=movies, **properties)
 
 
-
 @bp.route("/<int:id>/show", methods=["GET"])
 def show(id: int):
     """

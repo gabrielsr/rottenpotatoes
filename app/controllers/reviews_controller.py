@@ -22,11 +22,6 @@ properties = {
     "list_fields": ["potatoes", "moviegoer_name"],
 }
 
-
-class _j:
-    index = f"{bp_name}/index.jinja2"
-
-
 def register_blueprint(parent_blueprint: Blueprint):
     parent_blueprint.register_blueprint(
         bp, url_prefix=f"/<int:movie_id>/reviews")
