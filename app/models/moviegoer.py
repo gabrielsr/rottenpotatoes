@@ -18,6 +18,8 @@ class Moviegoer(db.Model):
     picture: Mapped[Optional[str]] = mapped_column(String(80))
     bio: Mapped[Optional[str]] = mapped_column(String(300))
 
+    movies: Mapped[list["Movie"]] = relationship("Movie", secondary="reviews") # *many-to-many
+
     @property
     def username(self):
         if not self.principal:
