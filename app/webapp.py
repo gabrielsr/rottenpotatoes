@@ -41,6 +41,11 @@ def create_app():
     for bp in blueprints():
         app.register_blueprint(bp, url_prefix=f"/{bp.name}")
 
+    # register api blueprint 
+    from .api import blueprint as api_bp
+    app.register_blueprint(api_bp, url_prefix='/api/v1')
+
+
     from .auth.loaders import load_user
     # from .models import Moviegoer, PasswordCredential
     # initialize commands

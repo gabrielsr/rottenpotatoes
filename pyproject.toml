@@ -18,6 +18,7 @@ email-validator = "^2.0.0.post2"
 python-dateutil = "^2.8.2"
 flask-dance = "^7.0.0"
 python-dotenv = "^1.0.0"
+flask-restx = "^1.1.0"
 
 
 [tool.poetry.group.test]  # This part can be left out
