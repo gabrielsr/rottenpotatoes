@@ -6,6 +6,9 @@
   <li v-for="review in reviews">
     {% raw %}{{ review.moviegoer_name }} - Potatoes:{{ review.potatoes }} {% endraw %}
   </li>
+  <li v-for="review in reviews2">
+    {% raw %}{{ review.moviegoer_name }} - Potatoes:{{ review.potatoes }} {% endraw %}
+  </li>
 </div>
 
 <script>
@@ -15,13 +18,23 @@
   createApp({
     data() {
       return {
-        reviews: []
+        reviews: [],
+        reviews2: []
       }
     },
-    mounted () {
+    async mounted () {
+      url = `/api/v1/movies/${movie_id}/reviews`
       axios
-        .get(`http://localhost:5000/api/v1/movies/${movie_id}/reviews`)
+        .get(url)
         .then(response => (this.reviews = response.data))
+      
+      try {
+	      const res = await axios.get(url);
+        this.reviews2 = res.data;
+      } catch (error) {
+	      // Handle errors
+        console.log(error);
+      }
     }
     //, delimiters: ['[[', ']]']
   }).mount('#app')
